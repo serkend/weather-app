@@ -21,7 +21,7 @@ class HoursWeatherAdapter(private var hoursList: List<Hour>) :
         fun bindItem(hourItem: Hour) = with(binding) {
             tvDateItem.text = hourItem.time
             tvStateItem.text = hourItem.condition.text
-            tvDegreesItem.text = hourItem.temp_c.toString()
+            tvDegreesItem.text = hourItem.temp_c.toString() + "°C"
             // Picasso.get().isLoggingEnabled = true
             Picasso.get().load("https://${hourItem.condition.icon}").into(ivState)
         }

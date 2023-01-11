@@ -1,10 +1,13 @@
 package com.example.weatherapp.ui.main.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.data.api.ApiHelper
@@ -17,12 +20,12 @@ import com.example.weatherapp.ui.base.MainFactory
 import com.example.weatherapp.ui.main.activities.MainActivity
 import com.example.weatherapp.ui.main.viewmodel.MainViewModel
 
-class DayFragment : Fragment() {
+class DayFragment : Fragment(), WeatherAdapter.Listener {
     lateinit var binding: FragmentDayBinding
     lateinit var adapter: WeatherAdapter
     lateinit var weatherItem:WeatherItem
 
-    lateinit var viewModel: MainViewModel
+    val viewModel: MainViewModel by activityViewModels { MainFactory(ApiHelper(RetrofitClient.apiService)) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -47,14 +50,14 @@ class DayFragment : Fragment() {
     }
 
     fun setupViewModel() {
-        viewModel = ViewModelProvider(
-            activity as MainActivity,
-            MainFactory(ApiHelper(RetrofitClient.apiService))
-        ).get(MainViewModel::class.java)
+//        viewModel = ViewModelProvider(
+//            activity as MainActivity,
+//            MainFactory(ApiHelper(RetrofitClient.apiService))
+//        ).get(MainViewModel::class.java)
     }
 
     fun setupUI() {
-        adapter = WeatherAdapter(weatherItem)
+        adapter = WeatherAdapter(weatherItem, this)
         binding.rcDay.adapter = adapter
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -66,5 +69,10 @@ class DayFragment : Fragment() {
 
         @JvmStatic
         fun newInstance() = DayFragment()
+    }
+
+    override fun onClick(dayItem: Forecastday) {
+        viewModel.clickedDayItem.value = dayItem
+        Log.d("MyLog: ", "Clicked - $weatherItem")
     }
 }
