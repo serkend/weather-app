@@ -5,5 +5,7 @@ import retrofit2.Response
 
 class ApiHelper(private val apiService: ApiService) {
 
-    suspend fun getWeather(): Response<WeatherItem> = apiService.getWeather()
+    suspend fun getWeather(city : String): Response<WeatherItem> {
+        return apiService.getWeather(city)
+    }
 }

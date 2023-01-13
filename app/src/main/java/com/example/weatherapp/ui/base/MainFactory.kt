@@ -6,7 +6,8 @@ import com.example.weatherapp.data.api.ApiHelper
 import com.example.weatherapp.data.repository.MainRepository
 import com.example.weatherapp.ui.main.viewmodel.MainViewModel
 
-class MainFactory(private val apiHelper: ApiHelper) : ViewModelProvider.Factory {
+class MainFactory(private val apiHelper: ApiHelper) :
+    ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {

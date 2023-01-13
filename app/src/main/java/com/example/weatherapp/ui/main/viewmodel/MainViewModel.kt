@@ -1,5 +1,6 @@
 package com.example.weatherapp.ui.main.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,9 +15,10 @@ class MainViewModel(val mainRepository: MainRepository) : ViewModel() {
     var weatherItem: MutableLiveData<Response<WeatherItem>> = MutableLiveData()
     var clickedDayItem: MutableLiveData<Forecastday> = MutableLiveData()
 
-    fun getWeather() {
+    fun getWeather(city: String) {
         viewModelScope.launch {
-            weatherItem.value = mainRepository.getWeather()
+            weatherItem.value = mainRepository.getWeather(city)
+
         }
     }
 }

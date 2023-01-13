@@ -48,7 +48,6 @@ class HoursFragment : Fragment() {
     }
 
     fun setupObservers() {
-        viewModel.getWeather()
         viewModel.weatherItem.observe(viewLifecycleOwner) {
             weatherItem = it.body()!!
             dayItem = weatherItem.forecast.forecastday[0]
